@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.gameboard {
+    align-self: center;
+    justify-self: center;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    gap: 2rem;
+    background-color: #946c47;
+    padding: 2em;
+    width: 50%;
+}
+
+.gametile {
+    display: flex;
+    background-color: #925a26;
+    border: 4px solid #4d2e12;
+    padding: 1em;
+    justify-content: space-around;
+}
+
+.gametile>div {
+    align-self: center;
+    justify-self: center;
+    font-size: 5em;
+}
