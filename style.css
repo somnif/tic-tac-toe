@@ -16,7 +16,8 @@
     gap: 2rem;
     background-color: #946c47;
     padding: 2em;
-    width: 50%;
+    width: 50vh;
+    height: 50vh;
 }
 
 .gametile {
@@ -25,10 +26,6 @@
     border: 4px solid #4d2e12;
     padding: 1em;
     justify-content: space-around;
-}
-
-.gametile>div {
-    align-self: center;
-    justify-self: center;
-    font-size: 5em;
+    align-items: center;
+    font-size: 3vh;
 }

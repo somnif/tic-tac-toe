@@ -52,8 +52,18 @@ const gamePlay = function () {
 
 
 const screenController = function() {
-    const boardContainer = document.querySelector(".gameboard")
+    const boardTiles = document.querySelectorAll(".gametile")
+    boardTiles.forEach((tile, index) => {
+        tile.addEventListener("click", () => {
+            gamePlay.takeTurn(index);
+        })
+    })
 
+    const drawTiles = function () {
+        boardTiles.forEach((tile, index) => {
+            tile.innerHTML = gameBoard.readState(index)
+        })
+    }
 
     return {drawTiles}
 }();
