@@ -7,7 +7,6 @@ const gameBoard = function () {
         return gameState[coordinate]
     }
 
-    //change input to read the currect game token.
     const writeState = function(coordinate) {
         if (Number.isInteger(coordinate) && coordinate < 9) {
             gameState[coordinate] = gamePlay.currentTurn();
