@@ -15,14 +15,15 @@ const gameBoard = function () {
 
     const readWinState = function() {
         const possibleWinStates = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]
-        const checkWinState = (a,b,c) => {
+
+        const checkWinStates = (a,b,c) => {
             if (gameState[a] && gameState[a] === gameState[b] && gameState[b] === gameState[c]){
                 screenController.highlightWin([a,b,c])
                 return true;
             }
         }
 
-        if (possibleWinStates.filter((state) => checkWinState(...state)).length) {
+        if (possibleWinStates.filter((state) => checkWinStates(...state)).length) {
                 return "WIN";
             } else if (!gameState.includes(null)) {
                 return "DRAW";
@@ -94,6 +95,13 @@ const gamePlay = function () {
 
 const screenController = function() {
     const boardTiles = document.querySelectorAll(".gametile")
+    boardTiles.forEach((tile, index) => {
+        tile.addEventListener("click", () => {
+            tile.classList.add("disabled")
+            gamePlay.takeTurn(index);
+        })
+    })
+
     const playerOneOutput = document.querySelector("#player-one")
     const playerTwoOutput = document.querySelector("#player-two")
     const messageOutput = document.querySelector("#announcements")
@@ -102,17 +110,9 @@ const screenController = function() {
     const dialogPlayerTwo = document.querySelector("#player-two-name")
     const dialogButton = document.querySelector("dialog>form>button")
    
-
     const resetButton = document.createElement("button")
     resetButton.append(document.createTextNode("Reset Game"));
     resetButton.addEventListener("click", () => gameReset())
-
-    boardTiles.forEach((tile, index) => {
-        tile.addEventListener("click", () => {
-            tile.classList.add("disabled")
-            gamePlay.takeTurn(index);
-        })
-    })
 
     const drawTiles = function () {
         boardTiles.forEach((tile, index) => {
@@ -153,8 +153,16 @@ const screenController = function() {
     }
 
     const updatePlayers = function () {
-        playerOneOutput.innerHTML = playerOne.name + "<br/> Score: " + playerOne.readWins();
-        playerTwoOutput.innerHTML = playerTwo.name + "<br/> Score: " + playerTwo.readWins();
+        const updatePlayer = (playerOutput, player) => {
+            const breakHTML = document.createElement("br")
+            playerOutput.innerHTML = "";
+            const playerText = document.createTextNode(player.name)
+            playerOutput.append(playerText)
+            playerOutput.append(breakHTML)
+            playerOutput.append("Score: " + player.readWins())
+        }
+        updatePlayer(playerOneOutput, playerOne)
+        updatePlayer(playerTwoOutput, playerTwo)
     }
 
     dialog.showModal();
@@ -165,7 +173,6 @@ const screenController = function() {
         playerTwo.name = dialogPlayerTwo.value || "Player Two"
         updatePlayers();
     })
-
 
     return {drawTiles, gameWinDialog, gameDrawDialog, highlightWin}
 }();
